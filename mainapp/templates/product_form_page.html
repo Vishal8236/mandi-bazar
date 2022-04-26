@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Document</title>
+</head>
+<body>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <label for="product">Product name</label>
+        <input type="text" id="product" name='product_name' required> <br><br>
+        
+        <label for="subtype">Product subtype</label>
+        <input type="text" id="subtype" name="subtype" > <br><br>
+        
+        <label for="Quantity">Quantity (KG)</label>
+        <input type="number" id="Quantity" name="quantity" required> <br> <br>
+  
+        <label for="district">District (product)</label>
+        <input type="text" id="district" name="district" > <br><br>
+        
+        <label for="base_price">Base Price (INR per KG)</label>
+        <input type="number" id="base_price" name="base_price" > <br><br>
+
+        <label for="describe">Product Description</label> <br>
+        <textarea name="description" id="describe" cols="30" rows="3"></textarea> <br><br>
+
+        <label for="image1">product image1</label>
+        <input type="file" id="image1" name="image1" required> <br> <br>
+
+        <label for="image2">product image2</label>
+        <input type="file" id="image2" name="image2" required> <br> <br>
+
+        <label for="video">product video</label>
+        <input type="file" id="video" name='video' required> <br> <br>
+
+        <input type="submit" value='upload'>
+    </form>
+</body>
+</html>
