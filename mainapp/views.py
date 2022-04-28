@@ -27,6 +27,14 @@ def farmer_signup(request):
         
         correct_info = 'YES'
 
+        queryset = Farmers_detail.objects.filter(email= farmer_email)
+        list(queryset)
+
+        if(len(queryset) !=0):    
+            messages.error(request, 'Email Already Registered. ')
+            correct_info = 'NO'
+
+
         if not (farmer_first_name.isalpha()):
             messages.error(request, 'First name must be alphabetic ')
             correct_info = 'NO'
@@ -88,7 +96,9 @@ def farmer_confirm_otp(request):
             return HttpResponseRedirect('/mandi/farmer-login')
 
         else:
+            messages.error(request, 'otp does not match')    
             print('not match')
+
     
     return render(request, 'farmer_otp.html')
 
@@ -198,7 +208,6 @@ def businessman_signup(request):
     if request.method != 'POST':
         pass
     else:
-        global businessman_first_name, businessman_last_name, businessman_contact_no,businessman_email, businessman_password
         businessman_first_name = request.POST.get('first_name')
         businessman_last_name = request.POST.get('last_name')
         businessman_contact_no = request.POST.get('contact_no')
@@ -206,7 +215,15 @@ def businessman_signup(request):
         businessman_password = request.POST.get('password')
         businessman_re_password = request.POST.get('re-password')
         
+
         correct_info = 'YES'
+
+        queryset = Businessman_details.objects.filter(email= businessman_email)
+        list(queryset)
+
+        if(len(queryset) !=0):    
+            messages.error(request, 'Email Already Registered. ')
+            correct_info = 'NO'
 
         if not (businessman_first_name.isalpha()):
             messages.error(request, 'First name must be alphabetic ')
@@ -230,6 +247,12 @@ def businessman_signup(request):
             correct_info = 'NO'
 
         if(correct_info == 'YES'):
+            request.session['businessman_first_name'] = businessman_first_name
+            request.session['businessman_last_name'] = businessman_last_name
+            request.session['businessman_contact_no'] = businessman_contact_no
+            request.session['businessman_email'] = businessman_email
+            request.session['businessman_password'] = businessman_password
+
             random2 = random.randint(1000, 9999)
             request.session['random2'] = random2
             print(random2)
@@ -256,21 +279,30 @@ def businessman_confirm_otp(request):
         print(user_otp)
         
         random2 = request.session.get("random2")
-
         print(random2)
+
+        businessman_first_name = request.session.get("businessman_first_name")
+        businessman_last_name = request.session.get("businessman_last_name")
+        businessman_contact_no = request.session.get("businessman_contact_no")
+        businessman_email = request.session.get("businessman_email")
+        businessman_password = request.session.get("businessman_password")
+
+        print(businessman_contact_no)
+
         if(random2 == int(user_otp)):
             print('Register Successfully')
             
             businessman = Businessman_details()
-            businessman.full_name = businessman_first_name + " " + businessman_last_name
-            businessman.contact_number = businessman_contact_no
+            businessman.full_name = str(businessman_first_name) + " " + str(businessman_last_name)
             businessman.email = businessman_email
+            businessman.contact_number = businessman_contact_no
             businessman.password = businessman_password
             businessman.save()
 
             return HttpResponseRedirect('/mandi/businessman-login')
 
         else:
+            messages.error(request, 'otp does not match')    
             print('not match')
     
     return render(request, 'businessman_otp.html')
@@ -349,4 +381,4 @@ def bidding_products(request, product):
     queryset = Product_details.objects.filter(product_type=product)
     list(queryset)
 
-    return render(request, 'bidding_products.html', {'queryset':queryset})
+    return render(request, 'bidding_products.html', {'queryset':queryset, 'product': product})

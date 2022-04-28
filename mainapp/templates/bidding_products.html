@@ -7,20 +7,25 @@
 <body>
         {% load static %}
 
-    <div class= 'main' style='padding: 60px;'>
-
-        {% for i in queryset %}
-            <div class="card" style="width: 18rem;">
-                <img class="card-img-top" src="{{ i.product_image1.url }}" alt="image" width='286px' height='180px'>
-                <h3>Product name : {{i.product_type}}</h3>
-                <h4>subtype : {{i.subtype}}</h4>
-                <h4>quantity: {{i.quantity}}</h4>
-                <h4>base price : {{i.base_price}}</h4>
+    
+        {% if queryset %}
+            {% for i in queryset %}
+            <div class= 'main' style='padding: 60px;'>
+                <div class="card" style="width: 18rem;">
+                    <img class="card-img-top" src="{{ i.product_image1.url }}" alt="image" width='286px' height='180px'>
+                    <h3>Type : {{i.product_type}}</h3>
+                    <h4>Subtype : {{i.subtype}}</h4>
+                    <h4>Quantity: {{i.quantity}}</h4>
+                    <h4>Base price : {{i.base_price}}</h4>
+                </div>
             </div>
-            
-        {% endfor %}
+            {% endfor %}
+        
+        {% else %}
+            <h1>We don't have {{product}} now.</h1>
+        {% endif %}
         
         
-    </div>
+   
 </body>
 </html>

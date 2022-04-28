@@ -12,6 +12,6 @@ class Businessman_detailAdmin(admin.ModelAdmin):
 
 @admin.register(models.Product_details)
 class Product_detailAdmin(admin.ModelAdmin):
-    list_display = ['id', 'product_type']
+    list_display = ['id', 'product_type','subtype','farmer']
 
 
