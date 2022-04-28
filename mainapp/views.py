@@ -263,7 +263,7 @@ def businessman_confirm_otp(request):
             
             businessman = Businessman_details()
             businessman.full_name = businessman_first_name + " " + businessman_last_name
-            businessman.contact_no = businessman_contact_no
+            businessman.contact_number = businessman_contact_no
             businessman.email = businessman_email
             businessman.password = businessman_password
             businessman.save()
@@ -295,4 +295,58 @@ def businessman_login(request):
             messages.error(request, 'Email and password does not match')    
     return render(request, 'businessman_login.html')
 
+def businessman_home(request):
+    email2 = request.session.get('email2')
 
+    return render(request, 'businessman_home.html',{"email":email2})
+
+
+def businessman_complete_profile(request):
+    if request.method != 'POST':
+        pass
+    else:
+        email2 = request.session.get('email2')
+
+        businessman_Adhar_card = request.POST.get('Adhar_card')
+        businessman_pan_card = request.POST.get('Pan_card')
+        businessman_gst_number = request.POST.get('gst_number')
+        businessman_address = request.POST.get('Address')
+        businessman_bank_account_no = request.POST.get('Bank_account_no')
+        businessman_account_holder_name = request.POST.get('Account_holder_name')
+        businessman_ifsc_code = request.POST.get('Ifsc_code')
+
+        businessman_account_holder_name2 = businessman_account_holder_name.replace(" ", "")        
+        correct_info = 'YES'
+
+        if len(businessman_Adhar_card) != 12:       
+            messages.error(request, 'please enter correct adhar card number')
+            correct_info = 'NO'
+
+        if len(businessman_pan_card) != 10:       
+            messages.error(request, 'please enter correct pan card number')
+            correct_info = 'NO'
+
+        if not (businessman_account_holder_name2.isalpha()):
+            messages.error(request, 'User name must be alphabetic ')
+            correct_info = 'NO'
+
+        if(correct_info == 'YES'):
+
+            businessman = Businessman_details.objects.get(email=email2)
+            businessman.adhar_card = businessman_Adhar_card
+            businessman.pan_card = businessman_pan_card
+            businessman.gst_number = businessman_gst_number
+            businessman.address = businessman_address
+            businessman.bank_account_number = businessman_bank_account_no
+            businessman.account_holder_name = businessman_account_holder_name
+            businessman.ifsc_code = businessman_ifsc_code
+            businessman.save() 
+
+    return render(request, "businessman_complete_profile.html")
+
+def bidding_products(request, product):
+    print(product)
+    queryset = Product_details.objects.filter(product_type=product)
+    list(queryset)
+
+    return render(request, 'bidding_products.html', {'queryset':queryset})

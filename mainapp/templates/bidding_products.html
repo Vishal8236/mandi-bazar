@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <title>Products page</title>
+</head>
+<body>
+        {% load static %}
+
+    <div class= 'main' style='padding: 60px;'>
+
+        {% for i in queryset %}
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="{{ i.product_image1.url }}" alt="image" width='286px' height='180px'>
+                <h3>Product name : {{i.product_type}}</h3>
+                <h4>subtype : {{i.subtype}}</h4>
+                <h4>quantity: {{i.quantity}}</h4>
+                <h4>base price : {{i.base_price}}</h4>
+            </div>
+            
+        {% endfor %}
+        
+        
+    </div>
+</body>
+</html>
