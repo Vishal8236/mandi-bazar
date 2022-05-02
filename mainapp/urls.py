@@ -15,7 +15,8 @@ urlpatterns = [
     path("businessman-login/", views.businessman_login, name="businessman-login"),
     path("businessman_otp/", views.businessman_confirm_otp, name="farmer_otp"),
     path("businessman_home/", views.businessman_home, name="businessman_home"),
-    path("businessman_home/businessman_complete_profile/",views.businessman_complete_profile),
+    path("businessman_home/businessman_complete_profile/",views.businessman_complete_profile,
+    name='businessman_complete_profile'),
 
     path("businessman_home/bidding_products/<str:product>",views.bidding_products, name='bidding_products' ),
     # path('businessman_home/soyabeen_page/',views.soyabeen_page, name='soyabeen' )

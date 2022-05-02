@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{% comment %} <!DOCTYPE html>
 <html lang="en">
 <head>
     <title>Document</title>
@@ -44,4 +44,164 @@
         <input type="submit" value='upload'>
     </form>
 </body>
-</html>
+</html> {% endcomment %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Product</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+
+    <!-- CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous"
+    />
+
+    <!-- JavaScript -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- <link rel="stylesheet" href="https://drive.google.com/uc?export=view&id=1-SynsFtan0_5WRnMXOGaMMMYGX-4qnUo"> -->
+   
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'css/add-product.css'%}">
+    <link rel="stylesheet" href="{% static 'css/header.css'%}">
+    <link rel="stylesheet" href="{% static 'css/footer.css'%}">
+
+  
+
+  </head>
+  <body>
+    <div class="intro">
+        <header id="header" style="position: absolute;">
+          <div class="container">
+          <nav class="navbar navbar-expand-lg navbar-light">
+            <div style="min-width: 160px;">
+              <a class="navbar-brand" href="#"><img id="navlogo" src="{% static '/Images/logo.png'%}"
+                /></a>
+            </div>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+          </nav>
+        </div>
+        </header>
+      
+    
+        <div class="container">
+            <!-- row 1st -->
+              <div class="row" id="intro-div">
+                <div class="col-sm form">
+                    <h1 style="font-size: 40px; color: blue;">Fill the Product Details</h1>
+                    <form method="POST" enctype="multipart/form-data" >
+                              {% csrf_token %}
+
+                        <div class="form-row d-flex">
+                          <div class="form-group col-sm-6 pe-4">
+                            <label class="form-label" for="product-name" style="font-weight: bold;">Product Name</label>
+                            <input type="text"  class="form-control" id="product-name" name='product_name' required>
+                          </div>
+                          <div class="form-group col-sm-6 ps-4">
+                            <label class="form-label" for="subtype" style="font-weight: bold;">Product Subtype (Optional)</label>
+                            <input type="text"  class="form-control"  id="subtype" name="subtype">
+                            <!-- <select class="form-control" id="subtype">
+                              <option selected>Choose...</option>
+                            </select> -->
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label class="form-label" for="district" style="font-weight: bold;">District (Product)</label>
+                          <select class="form-control" id="district"  name="district">
+                            <option selected>Choose...</option>
+                            <option value="Jabalpur">Jabalpur</option>
+                            <option value="Indore">Indore</option>
+                            <option value="Bhopal">Bhopal</option>
+                            <option value="Gwalior">Gwalior</option>
+                            <option value="Dewas">Dewas</option>
+                            <option value="Ratlam">Ratlam</option>
+                            <option value="Singrauli">Singrauli</option>
+                            <option value="Jhabua">Jhabua</option>
+                            <option value="Mandsaur">Mandsaur</option>
+                            <option value="Neemach">Neemach</option>
+                          </select>
+                        </div>
+                        <div class="form-row d-flex">
+                          <div class="form-group col-sm-6 pe-4">
+                            <label class="form-label" for="quantity" style="font-weight: bold;">Quantity (in Kg)</label>
+                            <input type="number" name='quantity' class="form-control" id="quantity" required>
+                          </div>
+                          <div class="form-group col-sm-6 pe-4" style="margin-left: 25px;">
+                            <label class="form-label" for="Base" style="font-weight: bold;">Base Price (Rs. per Kg)</label>
+                            <input type="text" class="form-control" id="Base" name="base_price" required>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label class="form-label" for="account-holder" style="font-weight: bold;">Product Description (optional)</label>
+                          <textarea type="text" name="description" class="form-control" id="account-holde" rows="6"></textarea>
+                        </div>
+                        <div class="form-row d-flex">
+                            <div>
+                                <label class="form-label" style="font-weight: bold;">Upload Product Images</label>
+                                <div class="form-group col-sm-4 pe-4 d-flex">
+                                    <div class="d-flex">
+                                    <div class="pe-4">
+                                        <input type="file"  accept="image/*" name="image1" id="img-1"  onchange="loadFile1(event)" style="display: none;">
+                                        <img id="output1" style="width: 150px; height: 150px; margin-bottom: 10px;"/><br>
+                                        <label id="img-upload-btn" for="img-1"  style="cursor: pointer;">Upload Image</label>
+                                    </div>
+                                    <div>
+                                        <input type="file"  accept="image/*" name="image2" id="img-2"  onchange="loadFile2(event)" style="display: none;">
+                                        <img id="output2" style="width: 150px; height: 150px; margin-bottom: 10px;"/><br>
+                                        <label id="img-upload-btn" for="img-2"  style="cursor: pointer;">Upload Image</label>
+                                    </div>
+                                    <div class="video-file">
+                                      <label class="form-label" style="font-weight: bold;">Upload Product Video</label>
+                                      <div>
+                                          <input type="file"  accept="video/*" name="video" id="img-3"  onchange="loadFile3(event)" style="display: none;">
+                                          <img id="output3"style="width: 250px; height: 150px; margin-bottom: 10px;"/><br>
+                                          <label id="img-upload-btn" for="img-3"  style="cursor: pointer;">Upload Video</label>
+                                      </div>
+                                  </div>
+                                </div>
+                            </div>
+                            </div>
+                      
+                            <!-- style="width: 250px; height: 150px; margin-bottom: 10px;" -->
+                        </div>
+                        <div class="form-btn w-100">
+                          <button id="submit-btn" type="submit" value="Login" class="btn btn-lg w-75 btn-block" style="background-color: blue; color: white">Complete</button>
+                        </div>
+                    </form>  
+                </div>
+              </div>
+        </div>
+    </div>
+
+
+    <div class="footer footer-bg">
+      <div class="copyright">
+        <ul>
+          <a href="/Templates/index.html">Home </a>
+          <a class="a" href="/Templates/index.html">About </a>
+          <a class="a" href="/Templates/index.html">Contact</a>
+      </ul>
+      <p >&#169; 2022-23 <a href="/Templates/index.html"><b>Mandi Baza </b></a>- All Right Reseved</p>
+      </div>
+    </div>
+
+    <!-- <script src="/JS/index.js"></script> -->
+    <script src="{% static 'JS/add-product.js' %}"></script>
+  </body>
+  </html>

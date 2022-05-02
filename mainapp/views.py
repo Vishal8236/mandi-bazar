@@ -11,7 +11,7 @@ import random
 
 
 def index(request):
-    return HttpResponse('Hello welcome in main app')
+    return render(request, 'index.html')
 
 def farmer_signup(request):
     if request.method != 'POST':
@@ -299,7 +299,7 @@ def businessman_confirm_otp(request):
             businessman.password = businessman_password
             businessman.save()
 
-            return HttpResponseRedirect('/mandi/businessman-login')
+            return HttpResponseRedirect('/mandi/businessman_home')
 
         else:
             messages.error(request, 'otp does not match')    
