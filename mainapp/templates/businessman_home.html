@@ -108,7 +108,7 @@
                       class="btn btn-danger btn-outline-success "
                       data-bs-toggle="modal" data-bs-target="#farmer-profile"
                       style="font-size: 18px;font-weight: bold; margin-left: -20px; color: white;">
-                      Complete Profile
+                      <a href="{% url 'businessman_complete_profile' %}" style='text-decoration : none;'>Complete Profile</a> 
                           </button>
                       </div>
                       </li>
@@ -117,7 +117,7 @@
           </header>
     
           <!-- Profile Completion -->
-          <div class="modal fade" data-bs-backdrop="static" id="farmer-profile">
+          {% comment %} <div class="modal fade" data-bs-backdrop="static" id="farmer-profile">
             <div class="modal-dialog" style="max-width: 600px;">
               <div class="modal-content" >
                 <div>
@@ -180,7 +180,7 @@
                   <div >Not a member yet? Sign Up.</div>
                 </div> -->
               </div>
-          </div>
+          </div> {% endcomment %}
     </div>
 
 
